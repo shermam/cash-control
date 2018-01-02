@@ -11,6 +11,12 @@ document.querySelector('#file').addEventListener('change', async e => {
         .map(parseStringToHtml)
         .map(extractData)
 
+    const docHtml = files;
+
+    for (const a of docHtml) {
+        output.innerHTML = a;
+    }
+
     for (const p of parsedFiles) {
         console.log(p);
     }

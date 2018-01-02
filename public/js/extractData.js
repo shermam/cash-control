@@ -1,3 +1,8 @@
+const dateRegex = /(\d{2}\/\d{2})( |$)/;
+const descriptionRegex = /(.{2,})/;
+const anyNumberRegex = /(-?(?:\d{1,3}(?:\.|,)?)*(?:\.|,)\d{2})/;
+const usNumberRegex = /(^-?(?:\d{1,3},?)*\.\d{2}$)/;
+
 export function extractData(htmlDoc) {
 
     const result = [];
@@ -20,44 +25,83 @@ function readRow(row) {
     const result = {};
 
     for (const cell of row.cells) {
-        if (!result.data) {
-            result.data = readDataCell(cell);
+
+        //Extract the date information
+        if (!result.date) {
+            result.date = readDateCell(cell);
             continue;
         }
 
-        if (!result.lancamento) {
-            result.lancamento = readLancamentoCell(cell);
+        //Extract the description information
+        if (!result.description) {
+            result.description = readDescriptionCell(cell);
             continue;
         }
 
-        if (!result.Valor) {
-            result.Valor = readValorCell(cell);
+        //Extract the value information
+        if (!result.value) {
+            result.value = parseNumber(readValueCell(cell));
             continue;
         }
 
-        if (!result.Saldo) {
-            result.Saldo = readSaldoCell(cell);
+        //Extract the balance information 
+        //(The rows the have only balance without value 
+        //have the balance ammount appearing on the value property)
+        if (!result.balance) {
+            result.balance = parseNumber(readValueCell(cell));
             continue;
         }
     }
 
-    return result.data ? result : false;
+    return result.date ? result : false;
 }
 
-function readDataCell(cell) {
-    const regex = /(\d{2}\/\d{2}) /;
-    const match = cell.innerHTML.match(regex);
+function readCell(cell, regex) {
+    const text = extractText(cell);
+
+    //Ugly hack to exclude exporadic information cells
+    if (text.indexOf("a compensar") !== -1) {
+        return false;
+    }
+
+    const match = text.match(regex);
     return match ? match[1] : false;
 }
 
-function readLancamentoCell(cell) {
+function extractText(cell) {
+    if (cell.firstElementChild) {
+        return extractText(cell.firstElementChild);
+    }
+
+    return cell.innerHTML.trim();
+}
+
+function readDateCell(cell) {
+    return readCell(cell, dateRegex);
+}
+
+function readDescriptionCell(cell) {
+    return readCell(cell, descriptionRegex);
 
 }
 
-function readValorCell(cell) {
-
+function readValueCell(cell) {
+    return readCell(cell, anyNumberRegex);
 }
 
-function readSaldoCell(cell) {
+function parseNumber(numString) {
 
+    if (!numString) {
+        return null;
+    }
+
+    if (usNumberRegex.test(numString)) {
+        numString = numString.replace(',', '');
+    } else {
+        numString = numString.replace('.', '');
+        numString = numString.replace(',', '.');
+    }
+
+    let num = Number(numString);
+    return isNaN(num) ? null : num;
 }
