@@ -21,7 +21,6 @@ export function extractData(htmlDoc) {
 
 
 function readRow(row) {
-    let count = 0;
     const result = {};
 
     for (const cell of row.cells) {
