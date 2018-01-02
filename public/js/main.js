@@ -1,16 +1,15 @@
 import { readFiles } from "./readFiles.js";
+import { parseStringToHtml } from "./parseStringToHtml.js";
 
 const output = document.querySelector('#output');
 
 document.querySelector('#file').addEventListener('change', async e => {
 
-    let files = await readFiles(e);
+    const files = await readFiles(e);
+    const parsedFiles = files.map(parseStringToHtml);
 
-    //Loops throug all of the selected files
-    for (const file of files) {
-
-        //logs the contents of the files
-        output.innerHTML += file;
+    for (const p of parsedFiles) {
+        console.log(p);
     }
 
 });
