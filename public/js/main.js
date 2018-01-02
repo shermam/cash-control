@@ -1,22 +1,16 @@
-import { readAsText } from "./reader.js";
+import { readFiles } from "./readFiles.js";
 
-const fileInput = document.querySelector('#file');
-const list = document.querySelector('#list');
 const output = document.querySelector('#output');
 
-fileInput.addEventListener('change', async e => {
+document.querySelector('#file').addEventListener('change', async e => {
+
+    let files = await readFiles(e);
 
     //Loops throug all of the selected files
-    for (const file of fileInput.files) {
-
-        //List the files names on the screen
-        const listItem = document.createElement('li');
-        listItem.innerHTML = file.name;
-        list.appendChild(listItem);
+    for (const file of files) {
 
         //logs the contents of the files
-        const fileContent = await readAsText(file);
-        output.innerHTML += fileContent;
+        output.innerHTML += file;
     }
 
 });
