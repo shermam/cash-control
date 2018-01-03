@@ -1,4 +1,4 @@
-const dateRegex = /(\d{2}\/\d{2})( |$)/;
+const dateRegex = /(\d{2}\/\d{2})( |$|\n)/;
 const descriptionRegex = /(.{2,})/;
 const anyNumberRegex = /(-?(?:\d{1,3}(?:\.|,)?)*(?:\.|,)\d{2})/;
 const usNumberRegex = /(^-?(?:\d{1,3},?)*\.\d{2}$)/;
@@ -9,50 +9,59 @@ export function extractData(htmlDoc) {
     const rows = htmlDoc.querySelectorAll('tr');
 
     for (const row of rows) {
-        const resultRow = readRow(row);
+        const transaction = readRow(row);
 
-        if (resultRow) {
-            result.push(resultRow);
+        if (transaction) {
+            rearrangeBalance(transaction);
+            result.push(transaction);
         }
     }
 
     return result;
 }
 
+function rearrangeBalance(transaction) {
+    if (transaction.description.indexOf('SALDO') !== -1 ||
+        transaction.description.indexOf('SDO') === 0) {
+        transaction.balance = transaction.value;
+        transaction.value = null;
+    }
+}
+
 
 function readRow(row) {
-    const result = {};
+    const transaction = {};
 
     for (const cell of row.cells) {
 
         //Extract the date information
-        if (!result.date) {
-            result.date = readDateCell(cell);
+        if (!transaction.date) {
+            transaction.date = readDateCell(cell);
             continue;
         }
 
         //Extract the description information
-        if (!result.description) {
-            result.description = readDescriptionCell(cell);
+        if (!transaction.description) {
+            transaction.description = readDescriptionCell(cell);
             continue;
         }
 
         //Extract the value information
-        if (!result.value) {
-            result.value = parseNumber(readValueCell(cell));
+        if (!transaction.value) {
+            transaction.value = parseNumber(readValueCell(cell));
             continue;
         }
 
         //Extract the balance information 
         //(The rows the have only balance without value 
         //have the balance ammount appearing on the value property)
-        if (!result.balance) {
-            result.balance = parseNumber(readValueCell(cell));
+        if (!transaction.balance) {
+            transaction.balance = parseNumber(readValueCell(cell));
             continue;
         }
     }
 
-    return result.date ? result : false;
+    return transaction.date ? transaction : false;
 }
 
 function readCell(cell, regex) {
