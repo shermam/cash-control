@@ -2,6 +2,10 @@ import { formatNumber, formatDate } from "./formatters.js";
 
 export function renderTransactionsTable(transactions) {
     const tableString = `
+        <div class="killer-grid-header">
+            <h1>Transações</h1>
+        </div>
+
         <table class="killer-grid">
             <thead>
                 <tr>
@@ -24,5 +28,5 @@ export function renderTransactionsTable(transactions) {
         </table >
     `;
 
-    document.querySelector('#transactions').innerHTML += tableString;
+    document.querySelector('#transactions').innerHTML = tableString;
 }
