@@ -1,6 +1,6 @@
 import { formatNumber, formatDate } from "./formatters.js";
 
-export function createTransactionsTable(transactions) {
+export function renderTransactionsTable(transactions) {
     const tableString = `
         <table class="killer-grid">
             <thead>

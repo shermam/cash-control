@@ -3,7 +3,7 @@ import { extractData } from "./extractData.js";
 import { generateFileHTMLDoc } from "./generateFileHTMLDoc.js";
 import { flatten } from "./flatten.js";
 import { updateLabel } from "./updateLabel.js";
-import { createTransactionsTable } from "./createTransactionTable.js";
+import { renderTransactionsTable } from "./renderTransactionsTable.js";
 
 document.querySelector('#file').addEventListener('change', async e => {
 
@@ -15,5 +15,5 @@ document.querySelector('#file').addEventListener('change', async e => {
         .flatten();
 
 
-    createTransactionsTable(transactions)
+    renderTransactionsTable(transactions)
 });
