@@ -4,6 +4,7 @@ const anyNumberRegex = /(-?(?:\d{1,3}(?:\.|,)?)*(?:\.|,)\d{2})/;
 const usNumberRegex = /(^-?(?:\d{1,3},?)*\.\d{2}$)/;
 
 let fileYear = null;
+let fileMonth = null;
 
 export function extractData(file) {
 
@@ -12,6 +13,7 @@ export function extractData(file) {
     const rows = htmlDoc.querySelectorAll('tr');
 
     fileYear = Number(file.name.substring(0, 4));
+    fileMonth = file.name.substring(5, 7);
 
     for (const row of rows) {
         const transaction = readRow(row);
@@ -74,7 +76,11 @@ function formatDate(rawDate) {
         return null;
     }
 
-    return fileYear.toString() + '-' + rawDate.split('/').reverse().join('-');
+    const day = rawDate.substring(0, 2);
+    const month = rawDate.substring(3, 5);
+    const year = fileMonth == '01' && month == '12' ? (fileYear - 1).toString() : fileYear.toString();
+
+    return year + '-' + month + '-' + day;
 }
 
 function readCell(cell, regex) {
