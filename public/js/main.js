@@ -14,7 +14,6 @@ document.querySelector('#file').addEventListener('change', async e => {
         .map(extractData)
         .flatten();
 
-    console.log(transactions);
 
     createTransactionsTable(transactions)
 });
