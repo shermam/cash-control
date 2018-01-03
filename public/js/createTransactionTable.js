@@ -10,15 +10,14 @@ export function createTransactionsTable(transactions) {
                 </tr>
             </thead>
             <tbody>
-            ${transactions.map(t => {
-                return `
+            ${transactions.map(t => `
                 <tr>
                     <td>${t.date}</td>
                     <td>${t.description}</td>
                     <td>${t.value || ''}</td>
                     <td>${t.balance || ''}</td>
-                </tr>`
-            }).join('')}
+                </tr>`)
+            .join('')}
             </tbody >
         </table >
     `;
