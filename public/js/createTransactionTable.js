@@ -1,6 +1,6 @@
 export function createTransactionsTable(transactions) {
     const tableString = `
-        <table>
+        <table class="killer-grid">
             <thead>
                 <tr>
                     <th>Data</th>
@@ -22,5 +22,5 @@ export function createTransactionsTable(transactions) {
         </table >
     `;
 
-    document.body.innerHTML += tableString;
+    document.querySelector('#transactions').innerHTML += tableString;
 }

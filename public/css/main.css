@@ -20,37 +20,3 @@ body{
     position: absolute;
     z-index: -1;
 }
-
-.inputfile + label {
-    /* max-width: 80%; */
-    font-size: 1.25rem;
-    font-weight: 700;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    cursor: pointer;
-    display: inline-block;
-    overflow: hidden;
-    padding: 0.625rem 1.25rem;
-}
-
-
-
-.inputfile + label svg {
-    width: 1em;
-    height: 1em;
-    vertical-align: middle;
-    fill: currentColor;
-    margin-top: -0.25em;
-    margin-right: 0.25em;
-}
-
-.inputfile + label {
-    color: #f1e5e6;
-    background-color: #396ad3;
-}
-
-.inputfile:focus + label,
-.inputfile.has-focus + label,
-.inputfile + label:hover {
-    background-color: #2a57b8;
-}

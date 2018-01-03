@@ -10,12 +10,16 @@
 		<title>Cash Control</title>
 		<link rel="stylesheet"
 		      href="css/main.css">
+		<link rel="stylesheet"
+		      href="css/fileInput.css">
+		<link rel="stylesheet"
+		      href="css/table.css">
 	</head>
 
 	<body>
 		<h1>Cash Control</h1>
 
-		<div class="box">
+		<div>
 			<input type="file"
 			       id="file"
 			       class="inputfile"
@@ -32,9 +36,14 @@
 			</label>
 		</div>
 
-		<br>
+		<div class="card"
+		     id="transactions">
 
-		<div id="output"></div>
+			<div class="killer-grid-header">
+				<h1>Transações</h1>
+			</div>
+
+		</div>
 
 		<script src="js/main.js"
 		        type="module"></script>
