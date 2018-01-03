@@ -1,6 +1,7 @@
 import { readFiles } from "./readFiles.js";
 import { extractData } from "./extractData.js";
 import { generateFileHTMLDoc } from "./generateFileHTMLDoc.js";
+import { flatten } from "./flatten.js";
 
 document.querySelector('#file').addEventListener('change', async e => {
 
@@ -8,9 +9,8 @@ document.querySelector('#file').addEventListener('change', async e => {
     const parsedFiles = files
         .map(generateFileHTMLDoc)
         .map(extractData)
+        .flatten();
 
-    for (const p of parsedFiles) {
-        console.log(p);
-    }
+    console.log(parsedFiles);
 
 });
