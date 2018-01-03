@@ -3,10 +3,15 @@ const descriptionRegex = /(.{2,})/;
 const anyNumberRegex = /(-?(?:\d{1,3}(?:\.|,)?)*(?:\.|,)\d{2})/;
 const usNumberRegex = /(^-?(?:\d{1,3},?)*\.\d{2}$)/;
 
-export function extractData(htmlDoc) {
+let fileYear = null;
 
+export function extractData(file) {
+
+    const htmlDoc = file.document;
     const result = [];
     const rows = htmlDoc.querySelectorAll('tr');
+
+    fileYear = Number(file.name.substring(0, 4));
 
     for (const row of rows) {
         const transaction = readRow(row);
@@ -36,7 +41,7 @@ function readRow(row) {
 
         //Extract the date information
         if (!transaction.date) {
-            transaction.date = readDateCell(cell);
+            transaction.date = formatDate(readDateCell(cell));
             continue;
         }
 
@@ -62,6 +67,14 @@ function readRow(row) {
     }
 
     return transaction.date ? transaction : false;
+}
+
+function formatDate(rawDate) {
+    if (!rawDate) {
+        return null;
+    }
+
+    return fileYear.toString() + '-' + rawDate.split('/').reverse().join('-');
 }
 
 function readCell(cell, regex) {

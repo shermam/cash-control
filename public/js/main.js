@@ -8,11 +8,14 @@ document.querySelector('#file').addEventListener('change', async e => {
 
     const files = await readFiles(e);
     const parsedFiles = files
-        .map(parseStringToHtml)
+        .map(f => {
+            f.document = parseStringToHtml(f.content);
+            return f;
+        })
         .map(extractData)
 
     for (const a of files) {
-        output.innerHTML = a;
+        output.innerHTML = a.content;
     }
 
     for (const p of parsedFiles) {
