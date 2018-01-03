@@ -10,5 +10,5 @@ export function updateLabel(fileInput) {
     if (fileName)
         label.querySelector('span').innerHTML = fileName;
     else
-        label.innerHTML = 'Selecione os arquivos desejados';
+        label.innerHTML = 'Selecione os extratos';
 }
