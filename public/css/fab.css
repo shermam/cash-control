@@ -5,7 +5,7 @@
     color: #fff;
 }
 
-.fab label:hover{
+.fab label.fab-label:hover{
     transform: scale(1.1) translate(-3px, -3px);
 }
 
@@ -15,7 +15,7 @@
     opacity: 0;
 }
 
-.fab label{
+.fab label.fab-label{
     box-shadow: 2px 4px 8px 0px rgba(0, 0, 0, 0.5);
     background: #396ad3;
     position: absolute;
@@ -32,7 +32,7 @@
     transition: transform 0.2s ease-in-out;
 }
 
-.fab input:checked ~ label{
+.fab input:checked ~ label.fab-label{
     transform: translateY(-330px) rotate(45deg);
     box-shadow: none;
     background: transparent;
@@ -57,7 +57,26 @@
     position: relative;
     overflow: hidden;
     border-radius: 5px;
-    width: 250px;
+    width: 300px;
     height: 400px;
-    /* background: red; */
+}
+
+.fab input:checked ~ .fab-menu{
+    transform: translateY(-400px);
+    opacity: 1;
+}
+
+.fab-menu{
+    position: absolute;
+    border-radius: 5px;
+    width: 300px;
+    height: 400px;
+    padding: 10px;
+    padding-top: 55px;
+    line-height: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+    opacity: 0;
 }
