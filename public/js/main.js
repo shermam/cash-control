@@ -2,24 +2,28 @@ import { readFiles } from "./readFiles.js";
 import { extractData } from "./extractData.js";
 import { generateFileHTMLDoc } from "./generateFileHTMLDoc.js";
 import { flatten } from "./flatten.js";
-import { updateLabel } from "./updateLabel.js";
+import { createUpdateLabel } from "./updateLabel.js";
 import { renderTransactionsTable } from "./renderTransactionsTable.js";
 import { store } from "./db.js";
 
 (async _ => {
 
     const objStore = await store('transactions');
+    const fileInput = document.querySelector('#file');
+    const updateLabel = createUpdateLabel(fileInput);
 
     document.querySelector('#clear-data').addEventListener('click', async e => {
         await objStore.clear();
         renderTransactionsTable(await objStore.getAll());
+        fileInput.value = '';
+        updateLabel();
     });
 
-    document.querySelector('#file').addEventListener('change', async e => {
+    fileInput.addEventListener('change', async e => {
 
-        updateLabel(e.target);
+        updateLabel();
 
-        const files = await readFiles(e);
+        const files = await readFiles(fileInput);
         const transactions = files
             .map(generateFileHTMLDoc)
             .map(extractData)
