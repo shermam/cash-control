@@ -55,10 +55,11 @@
 
 .fab .ripple-container{
     position: relative;
+    pointer-events: none;
     /* overflow: hidden; */
     border-radius: 5px;
     width: 300px;
-    height: 400px;
+    /* height: 400px; */
 }
 
 .fab input:checked ~ .fab-menu{
