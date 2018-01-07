@@ -50,23 +50,25 @@
 }
 
 .fab input:checked ~ .ripple-container .ripple{
-    transform: scale(20);
+    transform: scale(14);
 }
 
 .fab .ripple-container{
     position: relative;
-    overflow: hidden;
+    /* overflow: hidden; */
     border-radius: 5px;
     width: 300px;
     height: 400px;
 }
 
 .fab input:checked ~ .fab-menu{
+    pointer-events: auto;
     transform: translateY(-400px);
     opacity: 1;
 }
 
 .fab-menu{
+    pointer-events: none;
     position: absolute;
     border-radius: 5px;
     width: 300px;
