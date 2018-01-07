@@ -25,6 +25,15 @@ export async function store(storeName) {
                 request.onerror = reject;
                 request.onsuccess = _ => resolve(request.result);
             });
+        },
+        clear: function () {
+            const objectStore = getObjStore(db, storeName);
+            const request = objectStore.clear();
+
+            return new Promise((resolve, reject) => {
+                request.onerror = reject;
+                request.onsuccess = _ => resolve(request.result);
+            });
         }
     }
 

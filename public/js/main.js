@@ -9,7 +9,11 @@ import { store } from "./db.js";
 (async _ => {
 
     const objStore = await store('transactions');
-    renderTransactionsTable(await objStore.getAll());
+
+    document.querySelector('#clear-data').addEventListener('click', async e => {
+        await objStore.clear();
+        renderTransactionsTable(await objStore.getAll());
+    });
 
     document.querySelector('#file').addEventListener('change', async e => {
 
@@ -25,5 +29,7 @@ import { store } from "./db.js";
 
         renderTransactionsTable(await objStore.getAll());
     });
+
+    renderTransactionsTable(await objStore.getAll());
 
 })();
