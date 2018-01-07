@@ -2,38 +2,19 @@ export async function store(storeName) {
     const db = await getDb();
 
     return {
-        put: function (obj) {
-            const objectStore = getObjStore(db, storeName);
-            const request = objectStore.put(obj);
-
-            return new Promise((resolve, reject) => {
-                request.onsuccess = _ => {
-                    obj.id = request.result;
-                    resolve(obj);
-                };
-                request.onerror = reject;
-            });
+        put: async function (obj) {
+            const id = await execTransaction(db, storeName, 'put', obj);
+            obj.id = id;
+            return obj;
         },
         putAll: function (objs) {
             return Promise.all(objs.map(this.put));
         },
         getAll: function () {
-            const objectStore = getObjStore(db, storeName);
-            const request = objectStore.getAll();
-
-            return new Promise((resolve, reject) => {
-                request.onerror = reject;
-                request.onsuccess = _ => resolve(request.result);
-            });
+            return execTransaction(db, storeName, 'getAll');
         },
         clear: function () {
-            const objectStore = getObjStore(db, storeName);
-            const request = objectStore.clear();
-
-            return new Promise((resolve, reject) => {
-                request.onerror = reject;
-                request.onsuccess = _ => resolve(request.result);
-            });
+            return execTransaction(db, storeName, 'clear');
         }
     }
 
@@ -60,4 +41,14 @@ function createObjStores(event) {
 
 function createStore(db, storeName) {
     db.createObjectStore(storeName, { keyPath: 'id', autoIncrement: true });
+}
+
+function execTransaction(db, storeName, transactionName, params) {
+    const objectStore = getObjStore(db, storeName);
+    const request = objectStore[transactionName](params);
+
+    return new Promise((resolve, reject) => {
+        request.onerror = reject;
+        request.onsuccess = _ => resolve(request.result);
+    });
 }
