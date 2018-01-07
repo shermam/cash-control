@@ -10,9 +10,19 @@ import { store } from "./db.js";
 
     const objStore = await store('transactions');
     const fileInput = document.querySelector('#file');
+    const clearButton = document.querySelector('#clear-data');
+    const jsonButton = document.querySelector('#generate-json');
     const updateLabel = createUpdateLabel(fileInput);
 
-    document.querySelector('#clear-data').addEventListener('click', async e => {
+    jsonButton.addEventListener('click', async e => {
+
+        const jsonObj = await objStore.getAll();
+        const newWindow = window.open();
+        newWindow.document.body.innerHTML = JSON.stringify(jsonObj);
+
+    });
+
+    clearButton.addEventListener('click', async e => {
         await objStore.clear();
         renderTransactionsTable(await objStore.getAll());
         fileInput.value = '';
