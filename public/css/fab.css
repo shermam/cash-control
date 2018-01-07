@@ -71,7 +71,6 @@
     border-radius: 5px;
     width: 300px;
     height: 400px;
-    padding: 10px;
     padding-top: 55px;
     line-height: 50px;
     display: flex;
@@ -79,4 +78,26 @@
     align-items: center;
     transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
     opacity: 0;
+}
+
+.fab-menu-item{
+    height: 70px;
+    width: 100%;
+}
+
+.fab-menu-item button{
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+}
+
+.fab-menu-item button:hover{
+    background-color: #2a57b8;
 }
