@@ -5,6 +5,7 @@ import { flatten } from "./flatten.js";
 import { createUpdateLabel } from "./updateLabel.js";
 import { renderTransactionsTable } from "./renderTransactionsTable.js";
 import { store } from "./db.js";
+import { exportCSV } from "./csv.js";
 
 (async _ => {
 
@@ -12,14 +13,18 @@ import { store } from "./db.js";
     const fileInput = document.querySelector('#file');
     const clearButton = document.querySelector('#clear-data');
     const jsonButton = document.querySelector('#generate-json');
+    const csvButton = document.querySelector('#generate-csv');
     const updateLabel = createUpdateLabel(fileInput);
 
     jsonButton.addEventListener('click', async e => {
-
         const jsonObj = await objStore.getAll();
         const newWindow = window.open();
         newWindow.document.body.innerHTML = JSON.stringify(jsonObj);
+    });
 
+    csvButton.addEventListener('click', async e => {
+        const jsonObj = await objStore.getAll();
+        exportCSV(jsonObj, 'cash-control', ',');
     });
 
     clearButton.addEventListener('click', async e => {

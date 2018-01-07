@@ -31,7 +31,7 @@ function rearrangeBalance(transaction) {
     if (transaction.description.indexOf('SALDO') !== -1 ||
         transaction.description.indexOf('SDO') === 0) {
         transaction.balance = transaction.value;
-        transaction.value = null;
+        transaction.value = 0;
     }
 }
 
@@ -55,7 +55,7 @@ function readRow(row) {
 
         //Extract the value information
         if (!transaction.value) {
-            transaction.value = parseNumber(readValueCell(cell));
+            transaction.value = parseNumber(readValueCell(cell)) || 0;
             continue;
         }
 
