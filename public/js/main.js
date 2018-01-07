@@ -6,6 +6,7 @@ import { createUpdateLabel } from "./updateLabel.js";
 import { renderTransactionsTable } from "./renderTransactionsTable.js";
 import { store } from "./db.js";
 import { exportCSV } from "./csv.js";
+import { chart } from "./chart.js";
 
 (async _ => {
 
@@ -49,6 +50,9 @@ import { exportCSV } from "./csv.js";
         renderTransactionsTable(await objStore.getAll());
     });
 
-    renderTransactionsTable(await objStore.getAll());
+    const data = await objStore.getAll();
+
+    renderTransactionsTable(data);
+    chart(data);
 
 })();
