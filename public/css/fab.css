@@ -2,21 +2,62 @@
     position: fixed;
     bottom: 10vmin;
     right: 10vmin;
-    width: 80px;
-    height: 80px;
-    background: #396ad3;
     color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+}
+
+.fab label:hover{
+    transform: scale(1.1) translate(-3px, -3px);
+}
+
+
+.fab input{
+    position: absolute;
+    opacity: 0;
+}
+
+.fab label{
+    box-shadow: 2px 4px 8px 0px rgba(0, 0, 0, 0.5);
+    background: #396ad3;
+    position: absolute;
     border-radius: 50%;
     font-size: 40px;
     cursor: pointer;
-    box-shadow: 2px 4px 8px 0px rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    bottom: 0;
+    right: 0;
     transition: transform 0.2s ease-in-out;
 }
 
-.fab:hover{
-    background: #2d54a7;
-    transform: scale(1.1) translate(-3px, -3px);
+.fab input:checked ~ label{
+    transform: translateY(-330px) rotate(45deg);
+    box-shadow: none;
+    background: transparent;
+}
+
+.fab .ripple{
+    background: #396ad3;
+    width: 80px;
+    height: 80px;
+    bottom: 0;
+    right: 0;
+    border-radius: 50%;
+    position: absolute;
+    transition: transform 0.2s ease-in-out;
+}
+
+.fab input:checked ~ .ripple-container .ripple{
+    transform: scale(20);
+}
+
+.fab .ripple-container{
+    position: relative;
+    overflow: hidden;
+    border-radius: 5px;
+    width: 250px;
+    height: 400px;
+    /* background: red; */
 }
