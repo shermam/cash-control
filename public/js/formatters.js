@@ -14,5 +14,6 @@ export function formatNumber(n) {
 
 
 export function formatDate(d) {
-    return new Date(d).toLocaleDateString();
+    return d.split('-').reverse().join('/');
+    //return new Date(d).toLocaleDateString();
 }
