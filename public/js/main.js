@@ -60,8 +60,9 @@ const agregateByDate = createAgregation('date', 'value');
     });
 
     async function refreshScreen() {
-        const data = await objStore.getAll();
-        const agregatedData = agregateByDate(data.sort((a, b) => b.date < a.date ? 1 : -1));
+        let data = await objStore.getAll();
+        data = data.sort((a, b) => b.date < a.date ? 1 : -1);
+        const agregatedData = agregateByDate(data);
 
         renderTransactionsTable(data);
         chart(agregatedData);
