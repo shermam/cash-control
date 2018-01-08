@@ -55,8 +55,10 @@ const agregateByDate = createAgregation('date', 'value');
 
     async function refreshScreen() {
         const data = await objStore.getAll();
+        const agregatedData = agregateByDate(data);
+
         renderTransactionsTable(data);
-        chart(agregateByDate(data));
+        chart(agregatedData);
     }
 
     refreshScreen();
