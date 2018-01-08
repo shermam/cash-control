@@ -77,9 +77,6 @@ export function chart(data) {
         "dataProvider": data
     });
 
-    console.log('oi');
-
-
     chart.addListener("rendered", zoomChart);
 
     zoomChart();

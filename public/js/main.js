@@ -33,7 +33,7 @@ const agregateByDate = createAgregation('date', 'value');
 
     clearButton.addEventListener('click', async e => {
         await objStore.clear();
-        renderTransactionsTable(await objStore.getAll());
+        refreshScreen();
         fileInput.value = '';
         updateLabel();
     });
@@ -50,12 +50,15 @@ const agregateByDate = createAgregation('date', 'value');
 
         objStore.putAll(transactions);
 
-        renderTransactionsTable(await objStore.getAll());
+        refreshScreen();
     });
 
-    const data = await objStore.getAll();
+    async function refreshScreen() {
+        const data = await objStore.getAll();
+        renderTransactionsTable(data);
+        chart(agregateByDate(data));
+    }
 
-    renderTransactionsTable(data);
-    chart(agregateByDate(data));
+    refreshScreen();
 
 })();

@@ -16,10 +16,6 @@ export function createAgregation(dimensionProp, valueProp) {
             returnObj[valueProp] = round(agregatedObj[key], 2);
             array.push(returnObj);
         }
-
-        console.log(array);
-
-
         return array;
     }
 }
