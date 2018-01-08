@@ -3,6 +3,7 @@
     bottom: 10vmin;
     right: 10vmin;
     color: #fff;
+    z-index: 1;
 }
 
 .fab label.fab-label:hover{

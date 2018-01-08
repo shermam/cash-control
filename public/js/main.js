@@ -7,6 +7,9 @@ import { renderTransactionsTable } from "./renderTransactionsTable.js";
 import { store } from "./db.js";
 import { exportCSV } from "./csv.js";
 import { chart } from "./chart.js";
+import { createAgregation } from "./agregation.js";
+
+const agregateByDate = createAgregation('date', 'value');
 
 (async _ => {
 
@@ -53,6 +56,6 @@ import { chart } from "./chart.js";
     const data = await objStore.getAll();
 
     renderTransactionsTable(data);
-    chart(data);
+    chart(agregateByDate(data));
 
 })();
