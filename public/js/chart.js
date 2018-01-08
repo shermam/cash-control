@@ -32,7 +32,25 @@ export function chart(data) {
             "lineThickness": 2,
             "title": "red line",
             "useLineColorForBulletBorder": true,
-            "valueField": "value",
+            "valueField": "entrada",
+            "balloonText": "<span style='font-size:18px;'>[[value]]</span>"
+        },
+        {
+            "id": "g2",
+            "balloon": {
+                "drop": true,
+                "adjustBorderColor": false,
+                "color": "#ffffff"
+            },
+            "bullet": "round",
+            "bulletBorderAlpha": 1,
+            "bulletColor": "#FFFFFF",
+            "bulletSize": 5,
+            "hideBulletsCount": 50,
+            "lineThickness": 2,
+            "title": "red line",
+            "useLineColorForBulletBorder": true,
+            "valueField": "saida",
             "balloonText": "<span style='font-size:18px;'>[[value]]</span>"
         }],
         "chartScrollbar": {

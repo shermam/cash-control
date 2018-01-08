@@ -12,8 +12,14 @@ export function createAgregation(dimensionProp, valueProp) {
 
         for (const key in agregatedObj) {
             const returnObj = {};
+            const value = round(agregatedObj[key], 2);
             returnObj[dimensionProp] = key;
-            returnObj[valueProp] = round(agregatedObj[key], 2);
+            if (value < 0) {
+                returnObj.saida = -value;
+            } else {
+                returnObj.entrada = value;
+            }
+            //returnObj[valueProp] = value;
             array.push(returnObj);
         }
         return array;
