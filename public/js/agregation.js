@@ -23,6 +23,19 @@ export function createAgregation(dimensionProp, valueProp) {
     }
 }
 
+export function createAgregationRegex(dimensionProp, valueProp, regex) {
+
+    return function (data) {
+        return data.reduce((obj, item) => {
+
+            const label = item[dimensionProp].replace(regex, '');
+            obj[label] = obj[label] || 0;
+            obj[label] += item[valueProp];
+            return obj;
+        }, {});
+    }
+}
+
 function round(num, decimal) {
     const factor = Math.pow(10, decimal);
     return Math.round(num * factor) / factor;

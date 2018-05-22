@@ -7,9 +7,10 @@ import { renderTransactionsTable } from "./renderTransactionsTable.js";
 import { store } from "./db.js";
 import { exportCSV } from "./csv.js";
 import { chart } from "./chart.js";
-import { createAgregation, sum } from "./agregation.js";
+import { createAgregation, createAgregationRegex, sum } from "./agregation.js";
 
 const agregateByDate = createAgregation('date', 'value');
+const agregateByDescription = createAgregationRegex('description', 'value', /(( | ?-)\d{2}\/\d{2})|( \d{6,})/g);
 
 (async _ => {
 
@@ -19,11 +20,15 @@ const agregateByDate = createAgregation('date', 'value');
     const jsonButton = document.querySelector('#generate-json');
     const csvButton = document.querySelector('#generate-csv');
     const somatorioButton = document.querySelector('#somatorio');
+    const agregateButton = document.querySelector('#agregate');
     const updateLabel = createUpdateLabel(fileInput);
 
     somatorioButton.addEventListener('click', async e => {
         console.log(sum(await objStore.getAll()));
+    });
 
+    agregateButton.addEventListener('click', async e => {
+        console.log(agregateByDescription(await objStore.getAll()));
     });
 
     jsonButton.addEventListener('click', async e => {
@@ -61,10 +66,10 @@ const agregateByDate = createAgregation('date', 'value');
 
     async function refreshScreen() {
         const data = await objStore.getAll();
-        const agregatedData = agregateByDate(data.sort((a, b) => b.date < a.date ? 1 : -1));
+        //const agregatedData = agregateByDate(data.sort((a, b) => b.date < a.date ? 1 : -1));
 
         renderTransactionsTable(data);
-        chart(agregatedData);
+        //chart(agregatedData);
     }
 
     refreshScreen();
